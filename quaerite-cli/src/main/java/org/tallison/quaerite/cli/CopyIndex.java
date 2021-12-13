@@ -40,8 +40,8 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tallison.quaerite.connectors.SearchClient;
 import org.tallison.quaerite.connectors.SearchClientException;
 import org.tallison.quaerite.connectors.SearchClientFactory;
@@ -51,7 +51,7 @@ import org.tallison.quaerite.core.queries.Query;
 
 public class CopyIndex extends AbstractCLI {
 
-    static Logger LOG = LogManager.getLogger(CopyIndex.class);
+    static Logger LOG = LoggerFactory.getLogger(CopyIndex.class);
 
     private static final int NUM_THREADS = 10;
     private static final int BATCH_SIZE = 100;
@@ -214,7 +214,7 @@ public class CopyIndex extends AbstractCLI {
                     try {
                         done = future.get();
                     } catch (ExecutionException e) {
-                        LOG.error(e);
+                        LOG.error("serious problem", e);
                     }
                     if (done != null) {
                         if (done < 0) {
